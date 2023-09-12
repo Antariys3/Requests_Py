@@ -1,3 +1,9 @@
+"""
+Это файл с функциями для файла "Save_in_excel". Тут реализовано три функции, с помощью генератора.
+Функция get_url парсит сайт и возвращает список.
+Функция array вытягивает имя, цену и ссылку на фото.
+Функция download скачивает фото в папку photo.
+"""
 import requests
 from bs4 import BeautifulSoup
 from time import sleep
