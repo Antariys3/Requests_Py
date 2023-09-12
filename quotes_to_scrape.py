@@ -1,3 +1,6 @@
+"""
+Тут я учился логиниться и входить на сайт
+"""
 from requests import Session
 from bs4 import BeautifulSoup
 
@@ -11,9 +14,9 @@ work = Session()
 work.get(url, headers=headers)
 response = work.get(url_log, headers=headers)
 soup = BeautifulSoup(response.text, "lxml")
-token = soup.find("input")["value"]
+token = soup.find("input")["value"]  # важный параметр для входа на сайт.
 print(token)
-data = {"csrf_token": token, "username": "123", "password": "123"}
+data = {"csrf_token": token, "username": "123", "password": "123"}  # логин и пароль
 result = work.post(url_log, headers=headers, data=data, allow_redirects=True)
 print(result.text)
 """ 
