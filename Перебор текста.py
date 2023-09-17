@@ -39,4 +39,3 @@ for paragraph in paragraphs:
 # with open("Могущественный недотёпа.txt", "w", encoding="utf-8") as file:
 #     text_to_write = "\n".join(lines)
 #     file.write(text_to_write)
-
