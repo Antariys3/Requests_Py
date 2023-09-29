@@ -1,41 +1,43 @@
+import os
+import time
+
 import requests
-from bs4 import BeautifulSoup
+from selenium import webdriver
 
 url = "https://ru.noveldrama.com/mogushchestvennyi-nedotepa/r1614.html"
+cookies = {
+    'PHPSESSID': '6urmug8h8c6me2h7dtousb8kf4',
+    'pmvid': 'ed068b67-51df-4a98-b447-3ea138052cff',
+}
+
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
-                  " Chrome/106.0.0.0 YaBrowser/22.11.0.2419 Yowser/2.5 Safari/537.36"}
-response = requests.get(url, headers=headers)
-
-# print(response.headers, "headers")
-print(response.status_code, "status_code")
-# print(response.request, "request")
-# print(response.text)
+    'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,uk;q=0.6',
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)'
+                  ' Chrome/103.0.5060.53 Safari/537.36',
+    'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+    'sec-ch-ua-platform': '"Linux"',
+}
 
 
-html_content = response.content
-soup = BeautifulSoup(html_content, 'lxml')
-# print(soup)
+def get_source_html(url):
+    os.environ["PATH"] += os.pathsep + "/home/antar/Документы/Python/requests/ParseSelenium/chromedriver/chromedriver"
+    driver = webdriver.Chrome()
+    driver.maximize_window()
+    try:
+        # driver.add_cookie(cookies)
+        driver.execute_cdp_cmd("Network.setExtraHTTPHeaders", {"headers": headers})
+        driver.get(url=url)
+        time.sleep(20)
+    except Exception as _ex:
+        print(_ex)
+    finally:
+        driver.close()
+        driver.quit()
 
-# Извлечение текста из параграфов
-paragraphs = soup.find_all('p')
-# print(paragraphs.text)
 
-# Пройдитесь по каждому элементу <p>
-for paragraph in paragraphs:
-    # Получите текстовое содержимое элемента <p>
-    paragraph_text = paragraph.get_text()
+def main():
+    get_source_html(url)
 
-    # Выведите содержимое элемента <p>
-    print(paragraph_text)
 
-#
-# with open("Недотёпа.txt", "r", encoding="utf-8") as file:
-#     lines = file.readlines()
-#     for line in lines:
-#         line = line.replace("", "").replace("Ceneo.pl", "").replace("ENERG: E", "").replace("Najlepsza porównywarka", "")
-#
-#
-# with open("Могущественный недотёпа.txt", "w", encoding="utf-8") as file:
-#     text_to_write = "\n".join(lines)
-#     file.write(text_to_write)
+if __name__ == '__main__':
+    main()

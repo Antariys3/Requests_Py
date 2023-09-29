@@ -58,12 +58,12 @@ def get_source_html(url):
         # driver.add_cookie(cookies)
         driver.execute_cdp_cmd("Network.setExtraHTTPHeaders", {"headers": headers})
         driver.get(url=url)
-        time.sleep(5)
-        for i in range(2, 6):
-            # driver.add_cookie(cookies)
-            driver.execute_cdp_cmd("Network.setExtraHTTPHeaders", {"headers": headers})
-            driver.get(url=f"https://spb.zoon.ru/medical/page-{i}/")
-            time.sleep(10)
+        time.sleep(15)
+        # for i in range(2, 6):
+        #     # driver.add_cookie(cookies)
+        #     driver.execute_cdp_cmd("Network.setExtraHTTPHeaders", {"headers": headers})
+        #     driver.get(url=f"https://spb.zoon.ru/medical/page-{i}/")
+        #     time.sleep(10)
 
     except Exception as _ex:
         print(_ex)
